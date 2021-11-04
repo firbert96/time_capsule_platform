@@ -4,16 +4,7 @@ const express = require('express')
 const app = express();
 const morgan = require('morgan');
 
-const Sequelize = require('sequelize')
-
 const env = process.env.NODE_ENV;
-const dbConnection ={
-    development:process.env.DB_CONNECTION,
-    test:process.env.DB_CONNECTION_TEST,
-    production:process.env.DB_CONNECTION
-};
-
-const db = new Sequelize(dbConnection, {logging: false}) 
 
 if(env!=="test"){
     app.use(morgan('dev'));
@@ -22,6 +13,9 @@ if(env!=="test"){
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use(express.static('public'));
+
+const router = require('./routes/index');
+app.use('/api/v1',router);
 
 app.get('/', (req, res) => res.status(200)
     .send({

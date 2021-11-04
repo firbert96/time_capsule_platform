@@ -23,6 +23,8 @@
         ]
     },
     "ignorePatterns":[
-        "tests/"
+        "tests/",
+        "migrations/",
+        "models"
     ]
 }
