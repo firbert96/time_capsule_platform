@@ -65,7 +65,7 @@ module.exports = {
       release_time: release_time
     }
 
-    if(req.file.fieldname==='attachment' && env!=='development'){
+    if(req.file.fieldname==='attachment' && env!=='test'){
       let attachment = await imageKit.upload({
           file:req.file.buffer.toString('base64'),
           fileName:`IMG-${Date.now()}`

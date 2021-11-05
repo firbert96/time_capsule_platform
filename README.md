@@ -3,7 +3,7 @@
 - Submit Code : https://github.com/firbert96/time_capsule_platform
 - Backend Code : NodeJS(ExpressJS)
 - Database : PostgreSQL
-- Attach files : Multer and ImageKit
+- Attach files : Multer and ImageKit (still have little bit problem if attachment is not required when create time capsule message)
 - Send Email : MailTrap
 - Documentation : postman collection (https://go.postman.co/workspace/My-Workspace~0e346384-5e7b-4b47-89ab-9a2d14617e89/collection/5431650-1ca8d34d-b6dd-47f1-85fc-e10d0a038a50)
 - Test Implementation : - 
