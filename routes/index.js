@@ -14,6 +14,7 @@ router.post('/user/login',userController.login);
 
 // Time Capsule Message Router
 router.get('/time_capsule_message/list_by_users_id',authenticate,time_capsule_messageController.list);
+router.get('/time_capsule_message/list_all',time_capsule_messageController.listAll);
 router.post('/time_capsule_message/add',authenticate,multer.attachment,time_capsule_messageController.add);
 router.put('/time_capsule_message/update',authenticate,time_capsule_messageController.update);
 
