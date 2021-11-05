@@ -3,9 +3,10 @@ dotenv.config();
 const express = require('express')
 const app = express();
 const morgan = require('morgan');
-
+const cors = require('cors')
 const env = process.env.NODE_ENV;
 
+app.use(cors())
 if(env!=="test"){
     app.use(morgan('dev'));
 }
