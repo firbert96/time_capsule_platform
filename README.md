@@ -9,6 +9,16 @@
 - Test Implementation : - 
 - Design Diagram : https://drive.google.com/file/d/1jyZcyb2EpbuR4pHq6LAxs-76H-ZNVo_U/view?usp=sharing
 
+# Setup Enviroment
+- npm install
+
+# Migrate database
+- npm i -g sequelize-cli
+- sequelize db:migrate
+
+# How To Run
+- npm run dev
+
 # Description
 Definition:
 A time capsule is a historic cache of goods or information, usually intended as a deliberate 
