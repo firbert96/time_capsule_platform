@@ -24,7 +24,6 @@ module.exports = {
             },
       include:'users'
     }
-    console.log(moment().toDate())
     return Time_Capsule_Message
       .findAll(params)
       .then((response) => res.status(200).send(response))
@@ -66,7 +65,7 @@ module.exports = {
       release_time: release_time
     }
 
-    if(req.file.fieldname==='attachment' && env!=='test'){
+    if(req.file.fieldname==='attachment' && env!=='development'){
       let attachment = await imageKit.upload({
           file:req.file.buffer.toString('base64'),
           fileName:`IMG-${Date.now()}`
@@ -98,7 +97,7 @@ module.exports = {
     }
     if(typeof release_time != undefined && release_time != '')
     {
-      params.release_time = moment(release_time).subtract(7, 'hour').toDate();
+      params.release_time = release_time;
     }
     if(typeof active != undefined)
     {

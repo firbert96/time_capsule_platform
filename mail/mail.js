@@ -1,7 +1,7 @@
 const mailer = require('nodemailer');
 
 module.exports = { 
-  sendEmail(message){
+  sendEmail(to,subject,message){
     const transporter = mailer.createTransport({
         host: process.env.MAIL_HOST,
         port: process.env.MAIL_PORT,
@@ -13,12 +13,12 @@ module.exports = {
     //sending the email
     transporter.sendMail({
         from: '"Firbert" <firbert96@gmail.com>',
-        to: '"You there" <firbert96@gmail.com>',
-        subject: 'Scheduled Email',
+        to: '"You there" <'+to+'>',
+        subject: subject,
         html: message
     })
     .then(response => {
-      console.log("Email sent on " + new Date()) 
+      // console.log("Email sent on " + new Date()) 
       console.log(response)
     })
     .catch(error => {console.log(error)});
