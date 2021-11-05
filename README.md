@@ -14,7 +14,7 @@ Definition:
 A time capsule is a historic cache of goods or information, usually intended as a deliberate 
 method of communication with future people, and to help future archaeologists, 
 anthropologists, or historians. Wikipedia
-Features:
+* Features:
 - New user can self-registration on platform by providing,
 ▪ Email
 ▪ Password
@@ -27,12 +27,12 @@ Features:
 - User can list all time capsule and filter by active/inactive and sort by release time.
 - User can see specific time capsule ONLY after time release.
 - User will get email notification once the time release happened.
-Tasks
+* Tasks
 - Design backend architecture to fulfil all features.
 - Create APIs based on all features.
 - Create unit test for all features (optional)
 - Create local deployment documentation on readme.md
-Notes:
+* Notes:
 - Preferable stack: NodeJS, ExpressJS, PostgreSQL/MySQL. If you prefer to use other stack, 
 please give justification for your decision.
 - Container and unit test implementation are a plus.
