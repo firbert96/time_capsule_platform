@@ -65,15 +65,6 @@ module.exports = {
       release_time: release_time
     }
 
-    if(req.file.fieldname==='attachment' && env!=='test'){
-      let attachment = await imageKit.upload({
-          file:req.file.buffer.toString('base64'),
-          fileName:`IMG-${Date.now()}`
-      })
-      if (attachment){
-          params.attachment=attachment.url;
-      }
-    }
     return Time_Capsule_Message
       .create(params)
       .then((response) => res.status(201).send(response))
@@ -107,6 +98,30 @@ module.exports = {
         .update(params,{where: { id: req.query.id }})
         .then(() => res.status(200).send('Success Update Time Capsule Message'))
         .catch((error) => res.status(400).send(error));
+  },
+
+  addOrUpdateAttachment(req, res){
+    const encoded = req.file.buffer.toString('base64')
+    console.log(encoded)
+    imageKit
+    .upload({
+      file: req.file.buffer.toString("base64"),
+      fileName: `IMG-${Date.now()}`
+    })
+    .then(data => {
+      // console.log('data',data)
+      let params = {
+        attachment:data.url
+      }
+      return Time_Capsule_Message
+        .update(params,{where: { id: req.query.id }})
+        .then(() => res.status(200).send('Success Update Attachment Time Capsule Message'))
+        .catch((error) => res.status(400).send(error));
+    })
+    .catch(error => {
+      // console.log('error',error)
+      res.status(400).send(error);
+    })
   },
 
 }
