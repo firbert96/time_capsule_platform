@@ -25,15 +25,9 @@ A time capsule is a historic cache of goods or information, usually intended as 
 method of communication with future people, and to help future archaeologists, 
 anthropologists, or historians. Wikipedia
 ### Features:
-- New user can self-registration on platform by providing,
-* Email
-* Password
+- New user can self-registration on platform by providing: Email, Password
 - User MUST login to call all APIs on platform.
-- User can create new time capsule message,
-* Subject
-* Attach files (optional)
-* Message
-* Time Capsule Release Time 
+- User can create new time capsule message: Subject, Attach files (optional), Message, Time Capsule Release Time 
 - User can list all time capsule and filter by active/inactive and sort by release time.
 - User can see specific time capsule ONLY after time release.
 - User will get email notification once the time release happened.
