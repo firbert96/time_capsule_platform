@@ -4,8 +4,8 @@
 - Backend Code : NodeJS(ExpressJS)
 - Database : PostgreSQL
 - Attach files : Multer and ImageKit
-- Send Email : MailTrap
-- Documentation : postman collection (https://go.postman.co/workspace/My-Workspace~0e346384-5e7b-4b47-89ab-9a2d14617e89/collection/5431650-1ca8d34d-b6dd-47f1-85fc-e10d0a038a50)
+- Send Email : Nodemailer
+- Documentation : Postman collection (https://go.postman.co/workspace/My-Workspace~0e346384-5e7b-4b47-89ab-9a2d14617e89/collection/5431650-1ca8d34d-b6dd-47f1-85fc-e10d0a038a50)
 - Test Implementation : Mocha Chai
 - Design Diagram : https://www.figma.com/file/CuhZaMIULwGxW8EPKGYHUC/Time-Capsule-Message?node-id=0%3A1
 

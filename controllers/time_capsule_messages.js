@@ -11,7 +11,7 @@ const imageKit = new ImageKit({
   privateKey:process.env.PRIVATE_KEY_IMAGEKIT,
   urlEndpoint:process.env.URL_ENDPOINT_IMAGEKIT
 })
-const env = process.env.NODE_ENV 
+// const env = process.env.NODE_ENV 
 
 module.exports = {
   listAll(req,res)

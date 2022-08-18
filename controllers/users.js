@@ -8,37 +8,41 @@ const {
 module.exports = {
   async add(req, res) {
     const {fullname,email,password}=req.body;
-    const  salt = await bcrypt.genSaltSync(10);
-    const  passwordDigest = await bcrypt.hashSync(password,salt);
-    const params = {
-      id:uuidv4(),
-      fullname: fullname,
-      email: email,
-      password: passwordDigest,
+    try {
+      const  salt = await bcrypt.genSaltSync(10);
+      const  passwordDigest = await bcrypt.hashSync(password,salt);
+      const params = {
+        id:uuidv4(),
+        fullname: fullname,
+        email: email,
+        password: passwordDigest,
+      }
+      const user = await User.create(params);
+      return res.status(201).send(user)
     }
-    return User
-      .create(params)
-      .then((user) => res.status(201).send(user))
-      .catch((error) => res.status(400).send(error));
+    catch (error) {
+      return res.status(422).send(error);
+    }
   },
 
   async login (req,res){
     const {email,password}=req.body;
-    let login = await User.findOne({email});
-
-    // validator email
-    if(!login){
-        return res.status(400).send('Email not found');
+    try {
+      const login = await User.findOne({email});
+      if(!login){
+          return res.status(400).send('Email not found');
+      }
+      const result = await bcrypt.compareSync(password,login.password);
+      if(result){
+          const token = jwt.sign({ id: login.id }, process.env.SECRET_KEY);
+          return res.status(201).send(token)
+      }
+      else{
+        return res.status(400).send('Password isn\'t match');
+      }
     }
-    
-    let result = await bcrypt.compareSync(password,login.password);
-    
-    if(result){
-        var token = jwt.sign({ id: login.id }, process.env.SECRET_KEY);
-        return res.status(201).send(token)
-    }
-    else{
-      return res.status(400).send('Password isn\'t match');
+    catch (error) {
+      return res.status(422).send(error);
     }
   },
 };
