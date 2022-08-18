@@ -22,7 +22,8 @@ app.use(express.urlencoded({extended:false}));
 app.use(express.static('public'));
 
 const router = require('./routes/index');
-app.use('/api/v1',router);
+app.use('/api/v1',router.User);
+app.use('/api/v1',router.Time_Capsule_Message);
 
 app.get('/', (req, res) => res.status(200)
     .send({
@@ -43,7 +44,6 @@ schedule.scheduleJob('*/1 * * * *', function(){
         response.data.forEach(element => {
             let date = moment(element.release_time).toDate()
             schedule.scheduleJob(date, function(){
-                // console.log(element);
                 let to = element.users.email
                 let subject = element.subject
                 let message = element.message

@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-async function authenticate(req,res,next){
+function authenticate(req,res,next){
     try{
-        let str =req.headers.authorization;
-        let token=str.split("Bearer ")[1];
-        let payload = jwt.verify(token,process.env.SECRET_KEY);
+        const str =req.headers.authorization;
+        const token=str.split("Bearer ")[1];
+        const payload = jwt.verify(token,process.env.SECRET_KEY);
         req.headers.authorization=payload.id;
         next();
     }

@@ -11,12 +11,11 @@ const imageKit = new ImageKit({
   privateKey:process.env.PRIVATE_KEY_IMAGEKIT,
   urlEndpoint:process.env.URL_ENDPOINT_IMAGEKIT
 })
-// const env = process.env.NODE_ENV 
 
 module.exports = {
-  listAll(req,res)
+  async listAll(req,res)
   {
-    let params = {
+    const params = {
       order:[['release_time','asc']],
       where:{
               active:true,
@@ -24,40 +23,40 @@ module.exports = {
             },
       include:'users'
     }
-    return Time_Capsule_Message
-      .findAll(params)
-      .then((response) => res.status(200).send(response))
-      .catch((error) => { res.status(400).send(error); });
+    try{
+      const data = await Time_Capsule_Message.findAll(params);
+      return res.status(200).send(data);
+    }
+    catch(error){
+      return res.status(422).send(error)
+    }
   },
 
-  list(req, res) {
+  async list(req, res) {
     const {filter_fields,filter_data,sort_fields,sort_order}=req.query;
     let params = {}
-    
     if(typeof filter_fields != undefined && typeof filter_data != undefined && filter_fields != '' && filter_data != '')
     {
       params.where= {[filter_fields] :  filter_data}
     }
-
     if(typeof sort_fields != undefined && typeof sort_order != undefined && sort_fields != '' &&  sort_order != '')
     {
       params.order = [[sort_fields,sort_order]]
     }
-
     params.include = 'users'
 
-    return Time_Capsule_Message
-      .findAll(params)
-      .then((response) => res.status(200).send(response))
-      .catch((error) => { res.status(400).send(error); });
+    try{
+      const data = await Time_Capsule_Message.findAll(params);
+      return res.status(200).send(data);
+    }
+    catch(error){
+      return res.status(422).send(error);
+    }
   },
 
   async add(req, res) {
-    if(!req.headers.authorization){
-      return res.status(401).send('Unauthorized');
-    }
     const {subject,message,release_time}=req.body;
-    let params = {
+    const params = {
       id:uuidv4(),
       users_id:req.headers.authorization,
       subject: subject,
@@ -65,17 +64,16 @@ module.exports = {
       release_time: release_time
     }
 
-    return Time_Capsule_Message
-      .create(params)
-      .then((response) => res.status(201).send(response))
-      .catch((error) => res.status(400).send(error));
+    try{
+      const create = await Time_Capsule_Message.create(params);
+      return res.status(201).send(create)
+    }
+    catch(error){
+      return res.status(422).send(error)
+    }
   },
 
-  update(req, res) {
-    if(!req.headers.authorization){
-      return res.status(401).send('Unauthorized');
-    }
-
+  async update(req, res) {
     const {subject,message,release_time,active}=req.body;
     let params = {};
     if(typeof subject != undefined && subject != '')
@@ -94,34 +92,29 @@ module.exports = {
     {
       params.active = active
     }
-    return Time_Capsule_Message
-        .update(params,{where: { id: req.query.id }})
-        .then(() => res.status(200).send('Success Update Time Capsule Message'))
-        .catch((error) => res.status(400).send(error));
+    try{
+      await Time_Capsule_Message.update(params,{where: { id: req.query.id }});
+      return res.status(200).send('Success Update Time Capsule Message');
+    }
+    catch(error){
+      return res.status(422).send(error);
+    }
   },
 
-  addOrUpdateAttachment(req, res){
-    const encoded = req.file.buffer.toString('base64')
-    console.log(encoded)
-    imageKit
-    .upload({
-      file: req.file.buffer.toString("base64"),
-      fileName: `IMG-${Date.now()}`
-    })
-    .then(data => {
-      // console.log('data',data)
-      let params = {
-        attachment:data.url
-      }
-      return Time_Capsule_Message
-        .update(params,{where: { id: req.query.id }})
-        .then(() => res.status(200).send('Success Update Attachment Time Capsule Message'))
-        .catch((error) => res.status(400).send(error));
-    })
-    .catch(error => {
-      // console.log('error',error)
-      res.status(400).send(error);
-    })
+  async addOrUpdateAttachment(req, res){
+    try {
+      const encoded = req.file.buffer.toString('base64');
+      const img = imageKit.upload({
+        file: encoded,
+        fileName: `IMG-${Date.now()}`
+      });
+      const params = { attachment:img.url };
+      await Time_Capsule_Message.update(params,{where: { id: req.query.id }});
+      return res.status(200).send('Success Update Attachment Time Capsule Message');
+    }
+    catch (error) {
+      return res.status(422).send(error);
+    }
   },
 
 }

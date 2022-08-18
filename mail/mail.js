@@ -18,7 +18,6 @@ module.exports = {
         html: message
     })
     .then(response => {
-      // console.log("Email sent on " + new Date()) 
       console.log(response)
     })
     .catch(error => {console.log(error)});

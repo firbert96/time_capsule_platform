@@ -9,5 +9,14 @@ module.exports = {
             release_time: Joi.string().required(),
         });
         vR.validateRequest(req, next, schema);
-    }
+    },
+    update(req,res,next) {
+        const schema = Joi.object({
+            subject: Joi.string(),
+            message: Joi.string(),
+            release_time: Joi.string(),
+            active:Joi.boolean()
+        });
+        vR.validateRequest(req, next, schema);
+    },
 }
