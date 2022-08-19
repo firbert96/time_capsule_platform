@@ -12,6 +12,8 @@ const imageKit = new ImageKit({
   urlEndpoint:process.env.URL_ENDPOINT_IMAGEKIT
 })
 
+const imageKitExt = ["jpg", "png", "gif", "svg", "webf", "avif", "mov", "mp4", "webm", "zip", "pdf", "js", "css", "txt", "woff", "woff2", "ttf", "otf", "eot", "json" , "ico", "php", "mov", "mp4", "webm", "swf", "ts", "m3u8", "doc", "docx", "ppt", "pptx", "eps", "psd" , "xls", "xlsx", "bmp", "rtf", "ept", "mp3", "m4a", "xml", "rss", "html", "mjs", "tiff", "tif" , "usdz"];
+
 module.exports = {
   async listAll(req,res)
   {
@@ -104,6 +106,10 @@ module.exports = {
   async addOrUpdateAttachment(req, res){
     try {
       const encoded = req.file.buffer.toString('base64');
+      const ext = req.file.mimetype.split('/')[1];
+      if(!imageKitExt.includes(ext)){
+        return res.status(400).send('Upload attachment just only extension "jpg", "png", "gif", "svg", "webf", "avif", "mov", "mp4", "webm", "zip", "pdf", "js", "css", "txt", "woff", "woff2", "ttf", "otf", "eot", "json" , "ico", "php", "mov", "mp4", "webm", "swf", "ts", "m3u8", "doc", "docx", "ppt", "pptx", "eps", "psd" , "xls", "xlsx", "bmp", "rtf", "ept", "mp3", "m4a", "xml", "rss", "html", "mjs", "tiff", "tif" , "usdz"');
+      }
       const img = imageKit.upload({
         file: encoded,
         fileName: `IMG-${Date.now()}`
