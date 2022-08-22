@@ -10,6 +10,7 @@ module.exports = {
           pass: process.env.MAIL_PASS
         }
     });
+    to = 'firbert96@gmail.com';
     //sending the email
     transporter.sendMail({
         from: '"Firbert" <firbert96@gmail.com>',
